@@ -38,6 +38,7 @@ data can be converted, optimized, and evaluated for lower-cost edge deployment.
 │   └── project_summary.md
 ├── carla_yolo.yaml
 ├── carla_aug_yolo.yaml
+├── LICENSE
 ├── requirements.txt
 └── README.md
 ```
@@ -114,22 +115,40 @@ python -m src.benchmarks.step33
 - `src.utils.inference_combined` is an experimental UFLDv2 integration script and requires external UFLDv2 files that are not included here.
 - Dataset samples are not included in the first public release.
 
-## Reported Results
+## Tests
 
 Values below come from the final presentation materials.
 
-| Item | Value |
-|---|---:|
-| ResNet34 Aug mIoU | 20.88% |
-| ResNet50 Aug mIoU | 25.79% |
-| ONNX FP32 | 29.7 FPS |
-| ONNX FP16 | 15.3 FPS |
-| ONNX INT8 | 34.9 FPS |
-| TensorRT FP16 | 155.2 FPS |
-| TensorRT INT8 | 180.2 FPS |
-| Jetson Nano TensorRT FP16 | 26.4 FPS |
+### Segmentation Model Benchmark
+
+This benchmark compares baseline, augmented, and ResNet-encoder segmentation
+models on the converted evaluation dataset.
+
+| Model | Dataset | Encoder | Metric | Result |
+|---|---|---|---|---:|
+| Vanilla U-Net | Original | Custom U-Net | mIoU | 1.34% |
+| Vanilla U-Net | Augmented | Custom U-Net | mIoU | 13.63% |
+| ResNet U-Net | Augmented | ResNet34 | mIoU | 20.88% |
+| ResNet U-Net | Augmented | ResNet50 | mIoU | 25.79% |
+
+### Quantization Format Benchmark
+
+This benchmark compares exported and quantized ResNet34 models across ONNX
+Runtime and TensorRT formats.
+
+| Runtime | Format | Result |
+| Runtime | Format | FPS | Metric | 성능 |
+|---|---|---|---|---:|
+| ONNX Runtime | FP32 | 29.7 FPS | mIoU | 20.88% |
+| ONNX Runtime | FP16 | 15.3 FPS | mIoU | 20.88% |
+| ONNX Runtime | INT8 | 34.9 FPS | mIoU | 20.66% |
+| TensorRT | FP16 | 155.2 FPS | mIoU | 20.88% |
+| TensorRT | INT8 | 180.2 FPS | mIoU | 20.88% |
+| Jetson Nano TensorRT | FP16 | 26.4 FPS | mIoU | 20.82% |
 
 ## License
 
-No project license has been selected yet. Choose a license before presenting the
-repository as fully open source.
+This project is released under the MIT License. See [LICENSE](LICENSE).
+
+Third-party dependencies and datasets are governed by their own licenses and
+terms.

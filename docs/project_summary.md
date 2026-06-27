@@ -74,18 +74,27 @@ CARLA simulation
 - `src/benchmarks/step31_grand_benchmark.py`: integrated ONNX/TensorRT benchmark
 - `src/benchmarks/step32_make_inference_video.py`, `src/benchmarks/step33.py`: inference video rendering
 
-## Reported Results
+## Tests
 
-| Item | Reported Value |
-|---|---:|
-| ResNet34 Aug mIoU | 20.88% |
-| ResNet50 Aug mIoU | 25.79% |
-| ONNX FP32 FPS | 29.7 |
-| ONNX FP16 FPS | 15.3 |
-| ONNX INT8 FPS | 34.9 |
-| TensorRT FP16 FPS | 155.2 |
-| TensorRT INT8 FPS | 180.2 |
-| Jetson Nano TensorRT FP16 FPS | 26.4 |
+### Segmentation Model Benchmark
+
+| Model | Dataset | Encoder | Metric | Result |
+|---|---|---|---|---:|
+| Vanilla U-Net | Original | Custom U-Net | mIoU | TBD |
+| Vanilla U-Net | Augmented | Custom U-Net | mIoU | TBD |
+| ResNet U-Net | Augmented | ResNet34 | mIoU | 20.88% |
+| ResNet U-Net | Augmented | ResNet50 | mIoU | 25.79% |
+
+### Quantization Format Benchmark
+
+| Runtime | Format | Result |
+|---|---|---:|
+| ONNX Runtime | FP32 | 29.7 FPS |
+| ONNX Runtime | FP16 | 15.3 FPS |
+| ONNX Runtime | INT8 | 34.9 FPS |
+| TensorRT | FP16 | 155.2 FPS |
+| TensorRT | INT8 | 180.2 FPS |
+| Jetson Nano TensorRT | FP16 | 26.4 FPS |
 
 ## Cleanup Notes
 
