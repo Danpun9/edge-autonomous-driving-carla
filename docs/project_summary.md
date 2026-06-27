@@ -80,21 +80,22 @@ CARLA simulation
 
 | Model | Dataset | Encoder | Metric | Result |
 |---|---|---|---|---:|
-| Vanilla U-Net | Original | Custom U-Net | mIoU | TBD |
-| Vanilla U-Net | Augmented | Custom U-Net | mIoU | TBD |
+| Vanilla U-Net | Original | Custom U-Net | mIoU | 1.34% |
+| Vanilla U-Net | Augmented | Custom U-Net | mIoU | 13.63% |
 | ResNet U-Net | Augmented | ResNet34 | mIoU | 20.88% |
 | ResNet U-Net | Augmented | ResNet50 | mIoU | 25.79% |
 
 ### Quantization Format Benchmark
 
 | Runtime | Format | Result |
-|---|---|---:|
-| ONNX Runtime | FP32 | 29.7 FPS |
-| ONNX Runtime | FP16 | 15.3 FPS |
-| ONNX Runtime | INT8 | 34.9 FPS |
-| TensorRT | FP16 | 155.2 FPS |
-| TensorRT | INT8 | 180.2 FPS |
-| Jetson Nano TensorRT | FP16 | 26.4 FPS |
+| Runtime | Format | FPS | Metric | Result |
+|---|---|---|---|---:|
+| ONNX Runtime | FP32 | 29.7 FPS | mIoU | 20.88% |
+| ONNX Runtime | FP16 | 15.3 FPS | mIoU | 20.88% |
+| ONNX Runtime | INT8 | 34.9 FPS | mIoU | 20.66% |
+| TensorRT | FP16 | 155.2 FPS | mIoU | 20.88% |
+| TensorRT | INT8 | 180.2 FPS | mIoU | 20.88% |
+| Jetson Nano TensorRT | FP16 | 26.4 FPS | mIoU | 20.82% |
 
 ## Cleanup Notes
 

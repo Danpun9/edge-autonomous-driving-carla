@@ -117,8 +117,6 @@ python -m src.benchmarks.step33
 
 ## Tests
 
-Values below come from the final presentation materials.
-
 ### Segmentation Model Benchmark
 
 This benchmark compares baseline, augmented, and ResNet-encoder segmentation
@@ -137,7 +135,7 @@ This benchmark compares exported and quantized ResNet34 models across ONNX
 Runtime and TensorRT formats.
 
 | Runtime | Format | Result |
-| Runtime | Format | FPS | Metric | 성능 |
+| Runtime | Format | FPS | Metric | Result |
 |---|---|---|---|---:|
 | ONNX Runtime | FP32 | 29.7 FPS | mIoU | 20.88% |
 | ONNX Runtime | FP16 | 15.3 FPS | mIoU | 20.88% |
