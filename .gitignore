@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.lnk
+
+# CARLA and generated datasets
+_dataset/
+_dataset_*/
+ai_hub_dataset/
+_out_perception_data/
+
+# Training and benchmark outputs
+runs/
+benchmark_results/
+wandb/
+
+# Model weights and compiled artifacts
+*.pth
+*.pt
+*.onnx
+*.onnx.data
+*.engine
+*.plan
+*.cache
+
+# Video and large media outputs
+*.avi
+*.mp4
+*.mov
+*.mkv
+
+# External installers / binaries
+*.exe
+
+# Local result files
+result_*.jpg
+result_*.png
+result_*.mp4
+
+# Personal local overrides
+src/local_config.py

@@ -1,0 +1,18 @@
+# YOLO dataset configuration for the original CARLA object-detection dataset.
+# The `path` value is relative to the project root.
+path: ./_dataset_yolo
+
+# Ultralytics expects train/val image folders. This project uses the source
+# dataset's `test` split as validation data.
+train: images/train
+val: images/test
+
+# Remapped labels are produced by step21_remap_yolo_labels.py.
+train_labels: labels_mapped/train
+val_labels: labels_mapped/test
+
+# Class ids used by the project-specific detector.
+names:
+  0: Vehicle
+  1: Walker
+  2: TrafficLight

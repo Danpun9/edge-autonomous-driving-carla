@@ -1,0 +1,23 @@
+# Generated from source imports. Verify exact versions in the `carla` conda environment.
+
+albumentations
+matplotlib
+numpy
+onnx
+onnxconverter-common
+onnxruntime-gpu
+opencv-python
+Pillow
+pycuda
+pygame
+pynvml
+segmentation-models-pytorch
+torch
+torchvision
+torchview
+tqdm
+ultralytics
+
+# Installed separately depending on platform:
+# - carla Python API from the CARLA simulator distribution
+# - tensorrt / TensorRT Python bindings from NVIDIA packages
