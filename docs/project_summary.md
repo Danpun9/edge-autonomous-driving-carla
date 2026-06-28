@@ -74,28 +74,50 @@ CARLA simulation
 - `src/benchmarks/step31_grand_benchmark.py`: integrated ONNX/TensorRT benchmark
 - `src/benchmarks/step32_make_inference_video.py`, `src/benchmarks/step33.py`: inference video rendering
 
+## Test Environment
+
+Unless otherwise noted, benchmark values were measured on the local PC.
+
+| Component | Specification |
+|---|---|
+| Host OS | Windows 11 Pro |
+| Test OS | Ubuntu 22.04.5 LTS on WSL2 |
+| CPU | AMD Ryzen 9 7900X, 12 cores / 24 threads |
+| Memory | 31.1 GiB host RAM, 15 GiB visible in WSL2 |
+| GPU | NVIDIA GeForce RTX 4080 SUPER, 16,376 MiB VRAM |
+| NVIDIA driver / CUDA | Driver 591.86, CUDA 13.1 |
+| Python | `conda` environment `carla`, Python 3.10.20 |
+
 ## Tests
 
-### Segmentation Model Benchmark
+### Segmentation Model Benchmark (`.pth`)
 
-| Model | Dataset | Encoder | Metric | Result |
-|---|---|---|---|---:|
-| Vanilla U-Net | Original | Custom U-Net | mIoU | 1.34% |
-| Vanilla U-Net | Augmented | Custom U-Net | mIoU | 13.63% |
-| ResNet U-Net | Augmented | ResNet34 | mIoU | 20.88% |
-| ResNet U-Net | Augmented | ResNet50 | mIoU | 25.79% |
+| Model | Dataset | Encoder | mIoU | Checkpoint Size | FPS / Latency |
+|---|---|---|---:|---:|---|
+| Vanilla U-Net | Original | Custom U-Net | 1.34% | 88.96 MiB | To be reviewed |
+| Vanilla U-Net | Augmented | Custom U-Net | 13.63% | 88.96 MiB | To be reviewed |
+| ResNet U-Net | Augmented | ResNet34 | 20.88% | 279.95 MiB | See quantization benchmark |
+| ResNet U-Net | Augmented | ResNet50 | 25.79% | 372.69 MiB | To be reviewed |
 
 ### Quantization Format Benchmark
 
-| Runtime | Format | Result |
-| Runtime | Format | FPS | Metric | Result |
+| Runtime | Format | FPS | Latency | mIoU | Artifact Size | Change |
+|---|---|---:|---:|---:|---:|---|
+| ONNX Runtime | FP32 | 29.7 | 33.67 ms | 20.88% | 81.78 MiB | Baseline |
+| ONNX Runtime | FP16 | 15.3 | 65.36 ms | 20.88% | 46.89 MiB | FPS -48.5% vs ONNX FP32 |
+| ONNX Runtime | INT8 | 34.9 | 28.65 ms | 20.66% | 23.70 MiB | FPS +17.5%, mIoU -0.22pp vs ONNX FP32 |
+| TensorRT | FP16 | 155.2 | 6.44 ms | 20.88% | 46.98 MiB | FPS +422.6% vs ONNX FP32 |
+| TensorRT | INT8 | 180.2 | 5.55 ms | 20.88% | 23.86 MiB | FPS +16.1%, size -49.2% vs TensorRT FP16 |
+
+Review note: the local `ResNet34_Aug.onnx` FP32 artifact is 0.31 MiB, which is much smaller than the FP16 and INT8 artifacts. Re-export the FP32 ONNX file before treating the size comparison as final.
+
+### Jetson Nano Benchmark
+
+The Jetson Nano result is limited to one ResNet34 U-Net TensorRT FP16 test from the presentation materials.
+
+| Device | Model | Runtime | Format | FPS |
 |---|---|---|---|---:|
-| ONNX Runtime | FP32 | 29.7 FPS | mIoU | 20.88% |
-| ONNX Runtime | FP16 | 15.3 FPS | mIoU | 20.88% |
-| ONNX Runtime | INT8 | 34.9 FPS | mIoU | 20.66% |
-| TensorRT | FP16 | 155.2 FPS | mIoU | 20.88% |
-| TensorRT | INT8 | 180.2 FPS | mIoU | 20.88% |
-| Jetson Nano TensorRT | FP16 | 26.4 FPS | mIoU | 20.82% |
+| Yahboom Jetson Nano | ResNet34 U-Net | TensorRT | FP16 | 26.4 |
 
 ## Cleanup Notes
 

@@ -48,6 +48,19 @@ data can be converted, optimized, and evaluated for lower-cost edge deployment.
 The original experiments used Python 3.10 with CARLA, PyTorch, OpenCV,
 Ultralytics YOLO, ONNX Runtime, TensorRT, PyCUDA, and NVIDIA GPU tooling.
 
+The cleanup and benchmark documentation pass was reviewed on the following
+local PC environment:
+
+| Component | Specification |
+|---|---|
+| Host OS | Windows 11 Pro |
+| Test OS | Ubuntu 22.04.5 LTS on WSL2 |
+| CPU | AMD Ryzen 9 7900X, 12 cores / 24 threads |
+| Memory | 31.1 GiB host RAM, 15 GiB visible in WSL2 |
+| GPU | NVIDIA GeForce RTX 4080 SUPER, 16,376 MiB VRAM |
+| NVIDIA driver / CUDA | Driver 591.86, CUDA 13.1 |
+| Python | `conda` environment `carla`, Python 3.10.20 |
+
 ```bash
 conda activate carla
 python --version
@@ -67,8 +80,6 @@ For machine-specific overrides, create `src/local_config.py` and redefine only
 the values that need to change. This local override file is ignored by Git.
 
 ## Example Workflow
-
-Run commands from the project root.
 
 ### 1. Collect CARLA Training Data
 
@@ -117,32 +128,42 @@ python -m src.benchmarks.step33
 
 ## Tests
 
+Unless otherwise noted, the reported benchmark values were measured on the
+local PC environment above.
+
 ### Segmentation Model Benchmark
 
 This benchmark compares baseline, augmented, and ResNet-encoder segmentation
-models on the converted evaluation dataset.
+`.pth` models on the converted evaluation dataset.
 
-| Model | Dataset | Encoder | Metric | Result |
-|---|---|---|---|---:|
-| Vanilla U-Net | Original | Custom U-Net | mIoU | 1.34% |
-| Vanilla U-Net | Augmented | Custom U-Net | mIoU | 13.63% |
-| ResNet U-Net | Augmented | ResNet34 | mIoU | 20.88% |
-| ResNet U-Net | Augmented | ResNet50 | mIoU | 25.79% |
+| Model | Dataset | Encoder | mIoU | Checkpoint Size | FPS / Latency |
+|---|---|---|---:|---:|---|
+| Vanilla U-Net | Original | Custom U-Net | 1.34% | 88.96 MiB | To be reviewed |
+| Vanilla U-Net | Augmented | Custom U-Net | 13.63% | 88.96 MiB | To be reviewed |
+| ResNet U-Net | Augmented | ResNet34 | 20.88% | 279.95 MiB | See quantization benchmark |
+| ResNet U-Net | Augmented | ResNet50 | 25.79% | 372.69 MiB | To be reviewed |
 
 ### Quantization Format Benchmark
 
 This benchmark compares exported and quantized ResNet34 models across ONNX
 Runtime and TensorRT formats.
 
-| Runtime | Format | Result |
-| Runtime | Format | FPS | Metric | Result |
+| Runtime | Format | FPS | Latency | mIoU | Artifact Size | Change |
+|---|---|---:|---:|---:|---:|---|
+| ONNX Runtime | FP32 | 29.7 | 33.67 ms | 20.88% | 81.78 MiB | Baseline |
+| ONNX Runtime | FP16 | 15.3 | 65.36 ms | 20.88% | 46.89 MiB | FPS -48.5% vs ONNX FP32 |
+| ONNX Runtime | INT8 | 34.9 | 28.65 ms | 20.66% | 23.70 MiB | FPS +17.5%, mIoU -0.22pp vs ONNX FP32 |
+| TensorRT | FP16 | 155.2 | 6.44 ms | 20.88% | 46.98 MiB | FPS +422.6% vs ONNX FP32 |
+| TensorRT | INT8 | 180.2 | 5.55 ms | 20.88% | 23.86 MiB | FPS +16.1%, size -49.2% vs TensorRT FP16 |
+
+### Jetson Nano Benchmark
+
+The Jetson Nano result is limited to one ResNet34 U-Net TensorRT FP16 test from
+the presentation materials.
+
+| Device | Model | Runtime | Format | FPS |
 |---|---|---|---|---:|
-| ONNX Runtime | FP32 | 29.7 FPS | mIoU | 20.88% |
-| ONNX Runtime | FP16 | 15.3 FPS | mIoU | 20.88% |
-| ONNX Runtime | INT8 | 34.9 FPS | mIoU | 20.66% |
-| TensorRT | FP16 | 155.2 FPS | mIoU | 20.88% |
-| TensorRT | INT8 | 180.2 FPS | mIoU | 20.88% |
-| Jetson Nano TensorRT | FP16 | 26.4 FPS | mIoU | 20.82% |
+| Yahboom Jetson Nano | ResNet34 U-Net | TensorRT | FP16 | 26.4 |
 
 ## License
 
