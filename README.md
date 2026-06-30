@@ -35,6 +35,8 @@ data can be converted, optimized, and evaluated for lower-cost edge deployment.
 │   ├── benchmarks/        # Model benchmarks and video rendering
 │   └── utils/             # Environment checks and debugging helpers
 ├── docs/
+│   ├── assets/
+│   │   └── benchmark_visualization_4tier.png
 │   └── project_summary.md
 ├── carla_yolo.yaml
 ├── carla_aug_yolo.yaml
@@ -130,6 +132,10 @@ python -m src.benchmarks.step33
 
 Unless otherwise noted, the reported benchmark values were measured on the
 local PC environment above.
+
+### Benchmark Visualization
+
+![Segmentation benchmark comparison](docs/assets/benchmark_visualization_4tier.png)
 
 ### Segmentation Model Benchmark
 
