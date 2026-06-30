@@ -134,12 +134,12 @@ python -m src.benchmarks.step33
 
 데이터 증강 전/후 모델과 ResNet 인코더 적용 `.pth` 모델을 비교하는 테스트입니다.
 
-| 모델 | 데이터 | 인코더 | mIoU | 체크포인트 크기 | FPS / latency |
-|---|---|---|---:|---:|---|
-| Vanilla U-Net | 원본 | Custom U-Net | 1.34% | 88.96 MiB | 검토 필요 |
-| Vanilla U-Net | 증강 | Custom U-Net | 13.63% | 88.96 MiB | 검토 필요 |
-| ResNet U-Net | 증강 | ResNet34 | 20.88% | 279.95 MiB | 양자화 벤치마크 참고 |
-| ResNet U-Net | 증강 | ResNet50 | 25.79% | 372.69 MiB | 검토 필요 |
+| 모델 | 데이터 | 인코더 | mIoU | 체크포인트 크기 |
+|---|---|---|---:|---:|
+| Vanilla U-Net | 원본 | Custom U-Net | 1.34% | 88.96 MiB |
+| Vanilla U-Net | 증강 | Custom U-Net | 13.63% | 88.96 MiB |
+| ResNet U-Net | 증강 | ResNet34 | 20.88% | 279.95 MiB |
+| ResNet U-Net | 증강 | ResNet50 | 25.79% | 372.69 MiB |
 
 ### 양자화 포맷별 벤치마크
 

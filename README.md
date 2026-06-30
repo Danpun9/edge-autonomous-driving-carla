@@ -142,12 +142,12 @@ local PC environment above.
 This benchmark compares baseline, augmented, and ResNet-encoder segmentation
 `.pth` models on the converted evaluation dataset.
 
-| Model | Dataset | Encoder | mIoU | Checkpoint Size | FPS / Latency |
-|---|---|---|---:|---:|---|
-| Vanilla U-Net | Original | Custom U-Net | 1.34% | 88.96 MiB | To be reviewed |
-| Vanilla U-Net | Augmented | Custom U-Net | 13.63% | 88.96 MiB | To be reviewed |
-| ResNet U-Net | Augmented | ResNet34 | 20.88% | 279.95 MiB | See quantization benchmark |
-| ResNet U-Net | Augmented | ResNet50 | 25.79% | 372.69 MiB | To be reviewed |
+| Model | Dataset | Encoder | mIoU | Checkpoint Size |
+|---|---|---|---:|---:|
+| Vanilla U-Net | Original | Custom U-Net | 1.34% | 88.96 MiB |
+| Vanilla U-Net | Augmented | Custom U-Net | 13.63% | 88.96 MiB |
+| ResNet U-Net | Augmented | ResNet34 | 20.88% | 279.95 MiB |
+| ResNet U-Net | Augmented | ResNet50 | 25.79% | 372.69 MiB |
 
 ### Quantization Format Benchmark
 
